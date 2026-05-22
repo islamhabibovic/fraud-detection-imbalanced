@@ -1,0 +1,13 @@
+{
+  "dataset_name": "Kartik2112 Credit Card Transactions Fraud Detection",
+  "n_train_rows": 1296675,
+  "n_test_rows": 555719,
+  "n_features_after_engineering": 20,
+  "n_fraud_train": 7506,
+  "n_legit_train": 1289169,
+  "n_fraud_test": 2145,
+  "n_legit_test": 553574,
+  "fraud_pct_train": 0.5788,
+  "fraud_pct_test": 0.3861,
+  "missing_values": 0
+}
