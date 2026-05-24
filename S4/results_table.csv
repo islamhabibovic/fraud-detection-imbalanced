@@ -1,0 +1,9 @@
+Resampling,Model,Precision,Recall,F1,AUC-ROC,AUC-PR,MCC
+None (baseline),Random Forest,0.962,0.751,0.843,0.951,0.838,0.851
+None (baseline),XGBoost,0.943,0.776,0.852,0.969,0.857,0.856
+RandomOverSampler,Random Forest,0.888,0.806,0.845,0.965,0.834,0.846
+RandomOverSampler,XGBoost,0.876,0.827,0.851,0.972,0.853,0.851
+SMOTE,Random Forest,0.851,0.847,0.849,0.974,0.851,0.849
+SMOTE,XGBoost,0.866,0.857,0.861,0.979,0.871,0.862
+SMOTE+Tomek,Random Forest,0.863,0.857,0.86,0.976,0.858,0.86
+SMOTE+Tomek,XGBoost,0.879,0.867,0.873,0.981,0.879,0.874
