@@ -36,8 +36,3 @@ git push origin main
 Write-Host ""
 Write-Host "===========================================" -ForegroundColor Green
 Write-Host "  SESSION 2 GOTOV." -ForegroundColor Green
-Write-Host ""
-Write-Host "  Sljedeci push: SRIJEDA 27.05.2026" -ForegroundColor Yellow
-Write-Host "  Tada pokreni: .\3_pusaj_srijeda.ps1" -ForegroundColor Yellow
-Write-Host "===========================================" -ForegroundColor Green
-Write-Host ""
