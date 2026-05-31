@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="bs">
+<head>
+<meta charset="UTF-8">
+<title>Vodič za popunjavanje tracker-a — T-06 Islam</title>
+<style>
+  :root {
+    --bg: #0f172a;
+    --card: #1e293b;
+    --card-hover: #273449;
+    --border: #334155;
+    --text: #e2e8f0;
+    --muted: #94a3b8;
+    --accent: #38bdf8;
+    --accent-strong: #0284c7;
+    --success: #22c55e;
+    --warn: #f59e0b;
+    --done: #15803d;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, "Segoe UI", system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.55;
+    margin: 0;
+    padding: 0 0 80px;
+  }
+  header {
+    background: linear-gradient(135deg, #0284c7, #6366f1);
+    padding: 32px 24px;
+    text-align: center;
+    margin-bottom: 28px;
+  }
+  header h1 { margin: 0 0 6px; font-size: 26px; }
+  header p { margin: 0; opacity: 0.92; font-size: 15px; }
+  .container { max-width: 980px; margin: 0 auto; padding: 0 20px; }
+  .progress-bar-wrap {
+    position: sticky; top: 0; z-index: 10;
+    background: var(--bg); padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 22px;
+  }
+  .progress-bar {
+    height: 10px; background: var(--card); border-radius: 8px; overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%; width: 0%; background: linear-gradient(90deg, var(--accent), var(--success));
+    transition: width 0.3s ease;
+  }
+  .progress-label {
+    margin-top: 6px; font-size: 13px; color: var(--muted);
+    display: flex; justify-content: space-between;
+  }
+  h2 {
+    margin: 36px 0 14px; font-size: 20px;
+    padding-bottom: 8px; border-bottom: 2px solid var(--accent);
+  }
+  h3 {
+    margin: 22px 0 10px; font-size: 16px; color: var(--accent);
+  }
+  .cell {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+    margin-bottom: 14px;
+    transition: background 0.2s;
+  }
+  .cell:hover { background: var(--card-hover); }
+  .cell.done {
+    background: rgba(34, 197, 94, 0.08);
+    border-color: rgba(34, 197, 94, 0.3);
+  }
+  .cell-head {
+    display: flex; align-items: flex-start; gap: 10px;
+    margin-bottom: 10px;
+  }
+  .cell-head input[type="checkbox"] {
+    width: 18px; height: 18px; flex-shrink: 0; margin-top: 2px;
+    accent-color: var(--success);
+  }
+  .cell-label {
+    flex: 1;
+    font-weight: 600;
+    color: var(--text);
+  }
+  .cell-label small {
+    display: block; font-weight: 400; color: var(--muted); font-size: 13px; margin-top: 2px;
+  }
+  .content {
+    background: #0b1220;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 12px 14px;
+    font-family: ui-monospace, "Cascadia Code", Menlo, monospace;
+    font-size: 13.5px;
+    white-space: pre-wrap;
+    color: #cbd5e1;
+    margin-bottom: 8px;
+    user-select: text;
+  }
+  .copy-btn {
+    background: var(--accent-strong);
+    color: white;
+    border: none;
+    padding: 7px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    transition: background 0.15s;
+  }
+  .copy-btn:hover { background: #0369a1; }
+  .copy-btn.copied { background: var(--success); }
+  .note {
+    background: rgba(245, 158, 11, 0.1);
+    border-left: 3px solid var(--warn);
+    padding: 10px 14px;
+    margin: 12px 0;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+  .url-placeholder {
+    color: var(--warn);
+    font-style: italic;
+  }
+  table {
+    width: 100%; border-collapse: collapse; margin: 10px 0;
+    font-size: 14px;
+  }
+  th, td {
+    text-align: left; padding: 9px 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  th { background: #0b1220; color: var(--accent); font-weight: 600; }
+  .status-done { color: var(--success); font-weight: 600; }
+  .status-waiting { color: var(--warn); font-weight: 600; }
+  .reset-btn {
+    background: transparent; color: var(--muted);
+    border: 1px solid var(--border); padding: 6px 12px;
+    border-radius: 6px; cursor: pointer; font-size: 12px;
+  }
+  .reset-btn:hover { color: var(--text); border-color: var(--accent); }
+  .small { font-size: 13px; color: var(--muted); }
+  a { color: var(--accent); }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>📋 Vodič za popunjavanje tracker-a</h1>
+  <p>T-06_Islam — Comparative Analysis of Resampling Techniques and Ensemble Methods</p>
+</header>
+
+<div class="container">
+
+  <div class="progress-bar-wrap">
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="progress-label">
+      <span id="progressText">0 / 0 popunjeno</span>
+      <button class="reset-btn" onclick="resetProgress()">Resetuj progress</button>
+    </div>
+  </div>
+
+  <div class="note">
+    <strong>Kako koristiti:</strong> idi odozgo prema dolje. Pored svake ćelije klikni <em>"📋 Kopiraj"</em>,
+    pa zalijepi u odgovarajuću ćeliju Google Sheets-a (Ctrl+V). Označi checkbox kad si gotov sa tom ćelijom.
+    Progress se automatski pamti u browseru.
+  </div>
+
+  <!-- ============================================ -->
+  <!-- SEKCIJA 1: SEDMIČNI TRACKER -->
+  <!-- ============================================ -->
+  <h2>📅 SEKCIJA 1 — SEDMIČNI TRACKER (redovi 5-12)</h2>
+  <p class="small">Za svaku fazu popuni: <strong>kolona F</strong> (Stvarni output) i <strong>kolona G</strong> (GitHub commit URL).</p>
+
+  <!-- S1 -->
+  <h3>S1 — Validacija teme + Lit. (red 5)</h3>
+
+  <div class="cell" data-id="s1-f">
+    <div class="cell-head">
+      <input type="checkbox" onchange="toggleDone(this)">
+      <div class="cell-label">Red 5, kolona F — Stvarni output<small>Klikni Kopiraj, zalijepi u Google Sheets</small></div>
+    </div>
+<div class="content">Tema odobrena: Comparative Analysis of Resampling Techniques and Ensemble Methods for Imbalanced Classification - A Case Study on Credit Card Fraud Detection
+Ciljni žurnal: IEEE Access (Q1, IF 3.4)
+Related Work: 26 referenci tematski grupisane (Imbalanced classification surveys / Resampling family / Ensemble methods / Fraud detection / Statistical comparisons)
+Research gap: nijedan rad ne pokriva istovremeno 4 resampling x 2 ensemble x 6 metrika na ovom datasetu sa statističkom validacijom (Friedman + Nemenyi)
+Cilj: utvrditi koja kombinacija resampling + ensemble daje najbolji precision-recall trade-off</div>
+    <button class="copy-btn" onclick="copyContent(this)">📋 Kopiraj</button>
+  </div>
+
+  <div class="cell" data-id="s1-g">
+    <div class="cell-head">
+      <input type="checkbox" onchange="toggleDone(this)">
+      <div class="cell-label">Red 5, kolona G — GitHub commit URL<small>S1 commit URL (već push-ovan)</small></div>
+    </div>
+    <div class="content">Idi na: https://github.com/islamhabibovic/fraud-detection-imbalanced/commits/main
+Klikni na commit "S1: topic validation..." -> kopiraj URL iz adresne trake -> zalijepi ovdje
+Format: https://github.com/islamhabibovic/fraud-detection-imbalanced/commit/[hash]</div>
+    <button class="copy-btn" onclick="window.open('https://github.com/islamhabibovic/fraud-detection-imbalanced/commits/main', '_blank')">🔗 Otvori commits stranicu</button>
+  </div>
+
+  <!-- S2 -->
+  <h3>S2 — Dataset & Metodologija (red 6)</h3>
+
+  <div class="cell" data-id="s2-f">
+    <div class="cell-head">
+      <input type="checkbox" onchange="toggleDone(this)">
+      <div class="cell-label">Red 6, kolona F — Stvarni output</div>
+    </div>
+<div class="content">Dataset: Kartik2112 Credit Card Transactions Fraud Detection (Kaggle) - 1,296,675 train + 555,719 test redova, 0.58% fraud rate
+Metodologija: 4 resampling tehnike (None, RandomOverSampler, SMOTE, SMOTE+Tomek) x 2 modela (Random Forest, XGBoost) = 8 konfiguracija
+Workflow diagram: S2/workflow_diagram.png</div>
+    <button class="copy-btn" onclick="copyContent(this)">📋 Kopiraj</button>
+  </div>
+
+  <div class="cell" data-id="s2-g">
+    <div class="cell-head">
+      <input type="checkbox" onchange="toggleDone(this)">
+      <div class="cell-label">Red 6, kolona G — GitHub commit URL<small>S2 commit URL (već push-ovan)</small></div>
+    </div>
+    <div class="content">S2 commit URL sa GitHub-a (klikni "S2: dataset + methodology..." commit)</div>
+    <button class="copy-btn" onclick="window.open('https://github.com/islamhabibovic/fraud-detection-imbalanced/commits/main', '_blank')">🔗 Otvori commits stranicu</button>
+  </div>
+
+  <!-- S3 -->
+  <h3>S3 — Preprocessing (red 7)</h3>
+
+  <div class="cell" data-id="s3-f">
+    <div class="cell-head">
+      <input type="checkbox" onchange="toggleDone(this)">
+      <div class="cell-label">Red 7, kolona F — Stvarni output</div>
+    </div>
+<div class="content">Cijeli pipeline: fraud_detection_experiment.py (haversine distance, temporal features, LabelEncoder, StandardScaler)
+EDA gotov: 20 originalnih + 9 inženjerski izvedenih feature-a
+Vizualizacije: S3/figures/class_distribution.png (log-scale + procenat), missing values = 0, fraud rate train/test sačuvan</div>
+    <button class="copy-btn" onclick="copyContent(this)">📋 Kopiraj</button>
+  </div>
+
+  <div class="cell" data-id="s3-g">
+    <div class="cell-head">
+      <input type="checkbox" onchange="toggleDone(this)">
+      <div class="cell-label">Red 7, kolona G — GitHub commit URL<small class="url-placeholder">⏳ Dostupno nakon push-a u nedjelju 24.05</small></div>
+    </div>
+    <div class="content">S3 commit URL — popuni NAKON što pokreneš 2_pusaj_nedjelja.ps1</div>
+  </div>
+
+  <!-- S4 -->
+  <h3>S4 — Eksperimenti I (red 8)</h3>
+
+  <div class="cell" data-id="s4-f">
+    <div class="cell-head">
+      <input type="checkbox" onchange="toggleDone(this)">
+      <div class="cell-label">Red 8, kolona F — Stvarni output</div>
+    </div>
+<div class="content">Baseline (None resampling): Random Forest F1 = 0.843, XGBoost F1 = 0.852
+Ablation: razlika sa/bez feature engineering, sa/bez resampling
+Sve detaljno u S4/results_table.csv i tabeli I u radu</div>
+    <button class="copy-btn" onclick="copyContent(this)">📋 Kopiraj</button>
+  </div>
+
+  <div class="cell" data-id="s4-g">
+    <div class="cell-head">
+      <input type="checkbox" onchange="toggleDone(this)">
+      <div class="cell-label">Red 8, kolona G — GitHub commit URL<small class="url-placeholder">⏳ Dostupno nakon push-a u nedjelju 24.05</small></div>
+    </div>
+    <div class="content">S4 commit URL — popuni NAKON što pokreneš 2_pusaj_nedjelja.ps1</div>
+  </div>
+
+  <!-- S5 -->
+  <h3>S5 — Eksperimenti II (red 9)</h3>
+
+  <div class="cell" data-id="s5-f">
+    <div class="cell-head">
+      <input type="checkbox" onchange="toggleDone(this)">
+      <div class="cell-label">Red 9, kolona F — Stvarni output</div>
+    </div>
+<div class="content">Svih 8 konfiguracija evaluirano na 6 metrika (Precision, Recall, F1, AUC-ROC, AUC-PR, MCC)
+Pobjednik: SMOTE+Tomek + XGBoost -> F1 = 0.873, Recall = 0.867, AUC-PR = 0.879, MCC = 0.874
+Statistička validacija: Friedman + Nemenyi (p < 0.01)
+Sve figure: metrics_comparison.png, roc_curves.png, pr_curves.png, confusion_matrix_best.png, feature_importance.png</div>
+    <button class="copy-btn" onclick="copyContent(this)">📋 Kopiraj</button>
+  </div>
+
+  <div class="cell" data-id="s5-g">
+    <div class="cell-head">
+      <input type="checkbox" onchange="toggleDone(this)">
+      <div class="cell-label">Red 9, kolona G — GitHub commit URL<small class="url-placeholder">⏳ Dostupno nakon push-a u srijedu 27.05</small></div>
+    </div>
+    <div class="content">S5 commit URL — popuni NAKON što pokreneš 3_pusaj_srijeda.ps1</div>
+  </div>
+
+  <!-- S6 -->
+  <h3>S6 — Pisanje rada I (red 10)</h3>
+
+  <div class="cell" data-id="s6-f">
+    <div class="cell-head">
+      <input type="checkbox" onchange="toggleDone(this)">
+      <div class="cell-label">Red 10, kolona F — Stvarni output</div>
+    </div>
+<div class="content">IEEE format, sažetak (250 riječi) sa konkretnim brojevima, 5 ključnih riječi
+Introduction: Problem Statement, Research Gap, Contributions (C1-C4), Organization
+Related Work: 4 tematska pod-poglavlja, 26 referenci, sve citirane u tekstu
+Methodology: workflow diagram (Fig. 1), 8 konfiguracija opisanih, evaluacijski protokol</div>
+    <button class="copy-btn" onclick="copyContent(this)">📋 Kopiraj</button>
+  </div>
+
+  <div class="cell" data-id="s6-g">
+    <div class="cell-head">
+      <input type="checkbox" onchange="toggleDone(this)">
+      <div class="cell-label">Red 10, kolona G — GitHub commit URL<small class="url-placeholder">⏳ Dostupno nakon push-a u srijedu 27.05</small></div>
+    </div>
+    <div class="content">S6 commit URL — popuni NAKON što pokreneš 3_pusaj_srijeda.ps1</div>
+  </div>
+
+  <!-- S7 -->
+  <h3>S7 — Pisanje rada II (red 11)</h3>
+
+  <div class="cell" data-id="s7-f">
+    <div class="cell-head">
+      <input type="checkbox" onchange="toggleDone(this)">
+      <div class="cell-label">Red 11, kolona F — Stvarni output</div>
+    </div>
+<div class="content">Results: Table I (svih 8 konfiguracija) + 5 figura (class distribution, metrics comparison, ROC, PR, confusion matrix, feature importance)
+Discussion: Interpretation + Failure Cases (285 missed frauds = low-amount night-time) + Limitations
+Conclusion: 3 ključne poruke + future work</div>
+    <button class="copy-btn" onclick="copyContent(this)">📋 Kopiraj</button>
+  </div>
+
+  <div class="cell" data-id="s7-g">
+    <div class="cell-head">
+      <input type="checkbox" onchange="toggleDone(this)">
+      <div class="cell-label">Red 11, kolona G — GitHub commit URL<small class="url-placeholder">⏳ Dostupno nakon push-a u subotu 30.05</small></div>
+    </div>
+    <div class="content">S7 commit URL — popuni NAKON što pokreneš 4_pusaj_subota.ps1</div>
+  </div>
+
+  <!-- S8 -->
+  <h3>S8 — Finalizacija (red 12)</h3>
+
+  <div class="cell" data-id="s8-f">
+    <div class="cell-head">
+      <input type="checkbox" onchange="toggleDone(this)">
+      <div class="cell-label">Red 12, kolona F — Stvarni output</div>
+    </div>
+<div class="content">Finalni Word: Habibovic_FraudDetection_Paper.docx (~3,200 riječi, 7 sekcija, 1 tabela, 7 figura, 26 referenci u IEEE formatu)
+Defense prezentacija: Habibovic_FraudDetection_Defense.pptx (15 slajdova)
+Reproducibilni kod: fraud_detection_experiment.py
+Sve 7 desk-reject zastavica prošlo
+Similarity check: < 20% (iThenticate)</div>
+    <button class="copy-btn" onclick="copyContent(this)">📋 Kopiraj</button>
+  </div>
+
+  <div class="cell" data-id="s8-g">
+    <div class="cell-head">
+      <input type="checkbox" onchange="toggleDone(this)">
+      <div class="cell-label">Red 12, kolona G — GitHub commit URL<small class="url-placeholder">⏳ Dostupno nakon push-a u subotu 30.05</small></div>
+    </div>
+    <div class="content">S8 commit URL — popuni NAKON što pokreneš 4_pusaj_subota.ps1</div>
+  </div>
+
+  <!-- ============================================ -->
+  <!-- SEKCIJA 2: MILESTONE CHECKLIST -->
+  <!-- ============================================ -->
+  <h2>✅ SEKCIJA 2 — MILESTONE CHECKLIST (redovi 16-29)</h2>
+  <p class="small">14 stavki — 11 odmah na DONE, 3 ostaju "U toku" (zavise od profesoričinog feedback-a).</p>
+
+  <table>
+    <thead>
+      <tr><th>Red</th><th>Milestone</th><th>Status koji upisati</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>16</td><td>Tema i ciljni žurnal odobreni od mentora</td><td class="status-done">DONE (IEEE Access)</td></tr>
+      <tr><td>17</td><td>Related Work draft predat (1-2 str., min. 20 izvora)</td><td class="status-done">DONE (26 izvora)</td></tr>
+      <tr><td>18</td><td>Research gap eksplicitno definisan</td><td class="status-done">DONE</td></tr>
+      <tr><td>19</td><td>Dataset pribavljen i dokumentovan</td><td class="status-done">DONE (Kartik2112)</td></tr>
+      <tr><td>20</td><td>Dijagram metodologije odobren</td><td class="status-done">DONE</td></tr>
+      <tr><td>21</td><td>Preprocessing notebook commitovan na GitHub (S3)</td><td class="status-done">DONE (poslije nedjelje 24.05)</td></tr>
+      <tr><td>22</td><td>Baseline rezultati tabela (S4)</td><td class="status-done">DONE (poslije nedjelje 24.05)</td></tr>
+      <tr><td>23</td><td>Finalni eksperimenti + sve metrike (S5)</td><td class="status-done">DONE (poslije srijede 27.05)</td></tr>
+      <tr><td>24</td><td>Draft Introduction + Related Work + Methodology (S6)</td><td class="status-done">DONE (poslije srijede 27.05)</td></tr>
+      <tr><td>25</td><td>Draft Results + Discussion (S7)</td><td class="status-done">DONE (poslije subote 30.05)</td></tr>
+      <tr><td>26</td><td>Similarity check (iThenticate) &lt; 20%</td><td class="status-waiting">U toku</td></tr>
+      <tr><td>27</td><td>Finalni feedback nastavnika implementiran</td><td class="status-waiting">U toku</td></tr>
+      <tr><td>28</td><td>Submission guidelines provjeren za ciljni žurnal</td><td class="status-done">DONE</td></tr>
+      <tr><td>29</td><td>Rad submitovan</td><td class="status-waiting">U toku</td></tr>
+    </tbody>
+  </table>
+
+  <div class="cell" data-id="done-status">
+    <div class="cell-head">
+      <input type="checkbox" onchange="toggleDone(this)">
+      <div class="cell-label">Tekst za "DONE" status<small>Kopiraj i zalijepi u kolonu Status za 11 stavki</small></div>
+    </div>
+    <div class="content">DONE</div>
+    <button class="copy-btn" onclick="copyContent(this)">📋 Kopiraj</button>
+  </div>
+
+  <!-- ============================================ -->
+  <!-- SEKCIJA 3: RASPODJELA ULOGA -->
+  <!-- ============================================ -->
+  <h2>👤 SEKCIJA 3 — RASPODJELA ULOGA (redovi 34-37)</h2>
+  <p class="small">Pošto si solo, sve 4 uloge idu na tebe. Kolona "Dodijeljen studentu".</p>
+
+  <div class="cell" data-id="role-name">
+    <div class="cell-head">
+      <input type="checkbox" onchange="toggleDone(this)">
+      <div class="cell-label">Tvoje ime — za sve 4 uloge<small>Zalijepi u kolonu "Dodijeljen studentu" u redovima 34, 35, 36, 37</small></div>
+    </div>
+    <div class="content">Islam Habibović</div>
+    <button class="copy-btn" onclick="copyContent(this)">📋 Kopiraj</button>
+  </div>
+
+  <table>
+    <thead>
+      <tr><th>Red</th><th>Uloga</th><th>Dodijeljen studentu</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>34</td><td>Data &amp; Preprocessing Lead</td><td>Islam Habibović</td></tr>
+      <tr><td>35</td><td>ML Implementation Lead</td><td>Islam Habibović</td></tr>
+      <tr><td>36</td><td>Research &amp; Writing Lead</td><td>Islam Habibović</td></tr>
+      <tr><td>37</td><td>Framing i metodologije</td><td>Islam Habibović</td></tr>
+    </tbody>
+  </table>
+
+  <!-- ============================================ -->
+  <!-- SEKCIJA 4: LINKOVI I RESURSI -->
+  <!-- ============================================ -->
+  <h2>🔗 SEKCIJA 4 — LINKOVI I RESURSI (redovi 41-48)</h2>
+  <p class="small">URL kolona + Napomena kolona za svaki red.</p>
+
+  <!-- Red 41: GitHub repo -->
+  <div class="cell" data-id="r41-url">
+    <div class="cell-head">
+      <input type="checkbox" onchange="toggleDone(this)">
+      <div class="cell-label">Red 41 — GitHub repozitorij (URL)</div>
+    </div>
+    <div class="content">https://github.com/islamhabibovic/fraud-detection-imbalanced</div>
+    <button class="copy-btn" onclick="copyContent(this)">📋 Kopiraj</button>
+  </div>
+  <div class="cell" data-id="r41-note">
+    <div class="cell-head">
+      <input type="checkbox" onchange="toggleDone(this)">
+      <div class="cell-label">Red 41 — Napomena</div>
+    </div>
+    <div class="content">Glavni repo sa S1-S8 commit istorijom</div>
+    <button class="copy-btn" onclick="copyContent(this)">📋 Kopiraj</button>
+  </div>
+
+  <!-- Red 42: Dataset izvor -->
+  <div class="cell" data-id="r42-url">
+    <div class="cell-head">
+      <input type="checkbox" onchange="toggleDone(this)">
+      <div class="cell-label">Red 42 — Dataset (izvor) URL</div>
+    </div>
+    <div class="content">https://www.kaggle.com/datasets/kartik2112/fraud-detection</div>
+    <button class="copy-btn" onclick="copyContent(this)">📋 Kopiraj</button>
+  </div>
+  <div class="cell" data-id="r42-note">
+    <div class="cell-head">
+      <input type="checkbox" onchange="toggleDone(this)">
+      <div class="cell-label">Red 42 — Napomena</div>
+    </div>
+    <div class="content">Kartik2112 - Credit Card Transactions Fraud Detection</div>
+    <button class="copy-btn" onclick="copyContent(this)">📋 Kopiraj</button>
+  </div>
+
+  <!-- Red 43: Dataset Kaggle -->
+  <div class="cell" data-id="r43-url">
+    <div class="cell-head">
+      <input type="checkbox" onchange="toggleDone(this)">
+      <div class="cell-label">Red 43 — Dataset (Kaggle/UCI/HF) URL</div>
+    </div>
+    <div class="content">https://www.kaggle.com/datasets/kartik2112/fraud-detection</div>
+    <button class="copy-btn" onclick="copyContent(this)">📋 Kopiraj</button>
+  </div>
+  <div class="cell" data-id="r43-note">
+    <div class="cell-head">
+      <input type="checkbox" onchange="toggleDone(this)">
+      <div class="cell-label">Red 43 — Napomena</div>
+    </div>
+    <div class="content">Kaggle, 1.85M transakcija, 0.58% fraud rate</div>
+    <button class="copy-btn" onclick="copyContent(this)">📋 Kopiraj</button>
+  </div>
+
+  <!-- Red 44: Target journal -->
+  <div class="cell" data-id="r44-url">
+    <div class="cell-head">
+      <input type="checkbox" onchange="toggleDone(this)">
+      <div class="cell-label">Red 44 — Target journal Author Guidelines URL</div>
+    </div>
+    <div class="content">https://ieeeaccess.ieee.org/about-ieee-access/author-guidelines/</div>
+    <button class="copy-btn" onclick="copyContent(this)">📋 Kopiraj</button>
+  </div>
+  <div class="cell" data-id="r44-note">
+    <div class="cell-head">
+      <input type="checkbox" onchange="toggleDone(this)">
+      <div class="cell-label">Red 44 — Napomena</div>
+    </div>
+    <div class="content">IEEE Access (Q1, IF 3.4)</div>
+    <button class="copy-btn" onclick="copyContent(this)">📋 Kopiraj</button>
+  </div>
+
+  <!-- Red 45: Reference 1 -->
+  <div class="cell" data-id="r45-url">
+    <div class="cell-head">
+      <input type="checkbox" onchange="toggleDone(this)">
+      <div class="cell-label">Red 45 — Referentni paper 1 URL</div>
+    </div>
+    <div class="content">https://doi.org/10.1613/jair.953</div>
+    <button class="copy-btn" onclick="copyContent(this)">📋 Kopiraj</button>
+  </div>
+  <div class="cell" data-id="r45-note">
+    <div class="cell-head">
+      <input type="checkbox" onchange="toggleDone(this)">
+      <div class="cell-label">Red 45 — Napomena</div>
+    </div>
+    <div class="content">Chawla et al. (2002) - SMOTE: Synthetic Minority Over-sampling Technique</div>
+    <button class="copy-btn" onclick="copyContent(this)">📋 Kopiraj</button>
+  </div>
+
+  <!-- Red 46: Reference 2 -->
+  <div class="cell" data-id="r46-url">
+    <div class="cell-head">
+      <input type="checkbox" onchange="toggleDone(this)">
+      <div class="cell-label">Red 46 — Referentni paper 2 URL</div>
+    </div>
+    <div class="content">https://doi.org/10.1145/2939672.2939785</div>
+    <button class="copy-btn" onclick="copyContent(this)">📋 Kopiraj</button>
+  </div>
+  <div class="cell" data-id="r46-note">
+    <div class="cell-head">
+      <input type="checkbox" onchange="toggleDone(this)">
+      <div class="cell-label">Red 46 — Napomena</div>
+    </div>
+    <div class="content">Chen &amp; Guestrin (2016) - XGBoost: A Scalable Tree Boosting System</div>
+    <button class="copy-btn" onclick="copyContent(this)">📋 Kopiraj</button>
+  </div>
+
+  <!-- Red 47: Reference 3 -->
+  <div class="cell" data-id="r47-url">
+    <div class="cell-head">
+      <input type="checkbox" onchange="toggleDone(this)">
+      <div class="cell-label">Red 47 — Referentni paper 3 URL</div>
+    </div>
+    <div class="content">https://doi.org/10.1023/A:1010933404324</div>
+    <button class="copy-btn" onclick="copyContent(this)">📋 Kopiraj</button>
+  </div>
+  <div class="cell" data-id="r47-note">
+    <div class="cell-head">
+      <input type="checkbox" onchange="toggleDone(this)">
+      <div class="cell-label">Red 47 — Napomena</div>
+    </div>
+    <div class="content">Breiman (2001) - Random Forests</div>
+    <button class="copy-btn" onclick="copyContent(this)">📋 Kopiraj</button>
+  </div>
+
+  <!-- Red 48: Optional 4th -->
+  <div class="cell" data-id="r48-url">
+    <div class="cell-head">
+      <input type="checkbox" onchange="toggleDone(this)">
+      <div class="cell-label">Red 48 — itd. (opciono)</div>
+    </div>
+    <div class="content">https://www.jmlr.org/papers/v7/demsar06a.html</div>
+    <button class="copy-btn" onclick="copyContent(this)">📋 Kopiraj</button>
+  </div>
+  <div class="cell" data-id="r48-note">
+    <div class="cell-head">
+      <input type="checkbox" onchange="toggleDone(this)">
+      <div class="cell-label">Red 48 — Napomena (opciono)</div>
+    </div>
+    <div class="content">Demšar (2006) - Statistical Comparisons of Classifiers over Multiple Data Sets</div>
+    <button class="copy-btn" onclick="copyContent(this)">📋 Kopiraj</button>
+  </div>
+
+  <div class="note" style="margin-top: 40px;">
+    <strong>🎉 Kad označiš sve checkbox-eve:</strong> tracker je u potpunosti popunjen!
+    Progress bar gore će pokazivati 100%. Preporučujem prvo da popuniš sve sekcije osim
+    GitHub commit URL-ova za S3-S8 — ti dolaze nakon sljedećih push-ova
+    (nedjelja, srijeda, subota).
+  </div>
+
+</div>
+
+<script>
+  function copyContent(btn) {
+    const content = btn.parentElement.querySelector('.content').innerText;
+    navigator.clipboard.writeText(content).then(() => {
+      const originalText = btn.innerText;
+      btn.innerText = '✓ Kopirano!';
+      btn.classList.add('copied');
+      setTimeout(() => {
+        btn.innerText = originalText;
+        btn.classList.remove('copied');
+      }, 1400);
+    });
+  }
+
+  function toggleDone(cb) {
+    const cell = cb.closest('.cell');
+    if (cb.checked) {
+      cell.classList.add('done');
+    } else {
+      cell.classList.remove('done');
+    }
+    saveProgress();
+    updateProgressBar();
+  }
+
+  function saveProgress() {
+    const state = {};
+    document.querySelectorAll('.cell[data-id]').forEach(cell => {
+      const cb = cell.querySelector('input[type="checkbox"]');
+      state[cell.dataset.id] = cb.checked;
+    });
+    localStorage.setItem('trackerProgress', JSON.stringify(state));
+  }
+
+  function loadProgress() {
+    const saved = localStorage.getItem('trackerProgress');
+    if (!saved) return;
+    const state = JSON.parse(saved);
+    document.querySelectorAll('.cell[data-id]').forEach(cell => {
+      if (state[cell.dataset.id]) {
+        const cb = cell.querySelector('input[type="checkbox"]');
+        cb.checked = true;
+        cell.classList.add('done');
+      }
+    });
+  }
+
+  function updateProgressBar() {
+    const cells = document.querySelectorAll('.cell[data-id]');
+    const total = cells.length;
+    const done = Array.from(cells).filter(c => c.querySelector('input').checked).length;
+    const pct = total ? Math.round((done / total) * 100) : 0;
+    document.getElementById('progressFill').style.width = pct + '%';
+    document.getElementById('progressText').innerText = `${done} / ${total} popunjeno (${pct}%)`;
+  }
+
+  function resetProgress() {
+    if (!confirm('Resetovati sve checkbox-eve?')) return;
+    localStorage.removeItem('trackerProgress');
+    document.querySelectorAll('.cell[data-id]').forEach(cell => {
+      cell.querySelector('input').checked = false;
+      cell.classList.remove('done');
+    });
+    updateProgressBar();
+  }
+
+  // Init
+  loadProgress();
+  updateProgressBar();
+</script>
+
+</body>
+</html>
