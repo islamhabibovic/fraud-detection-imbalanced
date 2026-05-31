@@ -1,16 +1,3 @@
-# ============================================================
-# upload_to_github.ps1
-# Inicijalizuje git repo i pravi 8 commitova (S1-S8) sa porukama
-# iz TRACKER_GUIDE.md, zatim push-uje na GitHub.
-#
-# UPUTSTVO:
-#   1) Otvori PowerShell u ovom folderu (Shift + desni klik
-#      -> "Open PowerShell window here")
-#   2) Pokreni:  .\upload_to_github.ps1
-#
-# Ako PowerShell odbije izvrsavanje skripti, pokreni jednom:
-#   Set-ExecutionPolicy -Scope CurrentUser RemoteSigned
-# ============================================================
 
 $ErrorActionPreference = "Stop"
 
