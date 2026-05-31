@@ -8,9 +8,9 @@
 ![Team](https://img.shields.io/badge/team-T--06-purple)
 
 **Autor:** Islam Habibovic
-**Mentori:** doc. dr. Adnan Dzelihodzic - as. mr. Narcisa Hadzajlic - mr. Faris Hambo
+**Mentor:** as. mr. Narcisa Hadzajlic
 **Kurs:** Rudarenje podataka, ljetni semestar 2026
-**Institucija:** Internacionalni univerzitet u Sarajevu (IUS)
+**Institucija:** Politehnicki fakultet Zenica - Softversko inzenjerstvo
 
 ---
 
@@ -100,7 +100,7 @@ Ako koristis ovaj rad ili kod, molim te citiraj:
 Habibovic, I. (2026). Comparative Analysis of Resampling Techniques
 and Ensemble Methods for Imbalanced Classification: A Case Study
 on Credit-Card Fraud Detection. Data Mining course project,
-International University of Sarajevo.
+Politehnicki fakultet Zenica - Softversko inzenjerstvo.
 ```
 
 ---
