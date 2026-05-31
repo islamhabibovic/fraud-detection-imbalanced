@@ -54,7 +54,3 @@ Write-Host "===========================================" -ForegroundColor Green
 Write-Host ""
 Write-Host "  Sad idi na:" -ForegroundColor Cyan
 Write-Host "  https://github.com/islamhabibovic/fraud-detection-imbalanced/commits/main" -ForegroundColor Cyan
-Write-Host ""
-Write-Host "  -> kopiraj URL svakog S1-S8 commit-a u tracker" -ForegroundColor Cyan
-Write-Host "===========================================" -ForegroundColor Green
-Write-Host ""
