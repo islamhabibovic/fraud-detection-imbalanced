@@ -70,8 +70,3 @@ Write-Host ""
 Write-Host "===========================================" -ForegroundColor Green
 Write-Host "  SESSION 1 GOTOV." -ForegroundColor Green
 Write-Host "  Provjeri: https://github.com/islamhabibovic/fraud-detection-imbalanced/commits/main" -ForegroundColor Green
-Write-Host ""
-Write-Host "  Sljedeci push: NEDJELJA 24.05.2026" -ForegroundColor Yellow
-Write-Host "  Tada pokreni: .\2_pusaj_nedjelja.ps1" -ForegroundColor Yellow
-Write-Host "===========================================" -ForegroundColor Green
-Write-Host ""
