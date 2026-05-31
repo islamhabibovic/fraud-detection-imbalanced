@@ -1,6 +1,5 @@
 # ============================================================
 # SESSION 1 - DANAS (Petak 22.05.2026)
-# Resetuje postojecu historiju i push-uje: Init + S1 + S2
 # ============================================================
 $ErrorActionPreference = "Stop"
 
