@@ -139,10 +139,3 @@ Write-Host ""
 Write-Host "============================================" -ForegroundColor Green
 Write-Host "  GOTOVO! Projekat je na GitHub-u." -ForegroundColor Green
 Write-Host "============================================" -ForegroundColor Green
-Write-Host ""
-Write-Host "Otvori u browseru: $($repoUrl -replace '\.git$','')" -ForegroundColor Cyan
-Write-Host ""
-Write-Host "Za TRACKER kolonu 'GitHub commit URL':" -ForegroundColor Yellow
-Write-Host "  Idi na repo -> Commits -> klikni na svaki S1-S8 commit"
-Write-Host "  -> kopiraj URL iz adresne trake u odgovarajuci red tracker-a."
-Write-Host ""
