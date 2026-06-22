@@ -22,8 +22,3 @@ Write-Host ""
 Write-Host "[PUSH] Push na GitHub..." -ForegroundColor Cyan
 git push origin main
 
-Write-Host ""
-Write-Host "===========================================" -ForegroundColor Green
-Write-Host "  S7 paper draft popravljen i push-ovan." -ForegroundColor Green
-Write-Host "===========================================" -ForegroundColor Green
-Write-Host ""
