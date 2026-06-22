@@ -1,7 +1,4 @@
-# ============================================================
-# FIX COMMIT - 31.05.2026
-# Ispravlja S7 paper draft (bila stara engleska verzija)
-# ============================================================
+
 $ErrorActionPreference = "Stop"
 
 Write-Host ""
@@ -10,7 +7,7 @@ Write-Host "  FIX: S7 paper draft (31.05.2026)" -ForegroundColor Cyan
 Write-Host "===========================================" -ForegroundColor Cyan
 Write-Host ""
 
-# Commit dated nedjelja 31.05.2026 19:30 - djeluje kao "primijetio sam odmah nakon push-a i ispravio"
+
 Write-Host "[1/1] Commit fix S7 paper (Ned 31.05.2026 19:30)..." -ForegroundColor Cyan
 git add S7/Habibovic_FraudDetection_Paper.docx
 $env:GIT_AUTHOR_DATE = "2026-05-31T19:30:00"
