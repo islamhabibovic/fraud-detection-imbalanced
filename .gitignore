@@ -1,8 +1,4 @@
-# ============================================================
-# .gitignore — Projekat_FraudDetection_T06_Islam
-# ============================================================
 
-# --- Python ---
 __pycache__/
 *.py[cod]
 *$py.class
@@ -24,25 +20,25 @@ wheels/
 .installed.cfg
 *.egg
 
-# --- Virtuelni okruženja ---
+
 venv/
 env/
 ENV/
 .venv/
 .env
 
-# --- Jupyter ---
+
 .ipynb_checkpoints/
 *.ipynb_checkpoints
 
-# --- Node / pptx generator ---
+
 node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 package-lock.json
 
-# --- IDE / editori ---
+
 .vscode/
 .idea/
 *.swp
@@ -54,14 +50,14 @@ package-lock.json
 Thumbs.db
 desktop.ini
 
-# --- Dataset (preveliki za GitHub - link u README) ---
+
 *.csv.gz
 data/raw/
 data/processed/
 fraudTrain.csv
 fraudTest.csv
 
-# --- Privremeni / output fajlovi ---
+
 *.log
 *.tmp
 *.bak
