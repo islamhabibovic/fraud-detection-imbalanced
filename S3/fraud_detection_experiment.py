@@ -8,7 +8,8 @@ A CASE STUDY ON CREDIT CARD FRAUD DETECTION
 Author:   Islam Habibovic
 Course:   Rudarenje podataka (Data Mining)
 Semester: Ljetni semestar 2026
-Mentor:   doc. dr. Adnan Dzelihodzic
+Profesor: doc. dr. Adnan Dzelihodzic
+Asistent: as. mr. Narcisa Hadzajlic
 
 DATASET
 -------

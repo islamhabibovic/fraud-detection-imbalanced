@@ -8,7 +8,8 @@
 ![Team](https://img.shields.io/badge/team-T--06-purple)
 
 **Autor:** Islam Habibovic
-**Mentor:** as. mr. Narcisa Hadzajlic
+**Predmetni nastavnik:** doc. dr. Adnan Dzelihodzic
+**Asistent:** as. mr. Narcisa Hadzajlic
 **Kurs:** Rudarenje podataka, ljetni semestar 2026
 **Institucija:** Politehnicki fakultet Zenica - Softversko inzenjerstvo
 
@@ -57,9 +58,9 @@ u tracker-u, plus relevantne datoteke za tu fazu.
 
 | Konfiguracija            | Precision | Recall | F1        | AUC-ROC | AUC-PR    | MCC       |
 |--------------------------|-----------|--------|-----------|---------|-----------|-----------|
-| Baseline RF              | 0.851     | 0.836  | 0.843     | 0.978   | 0.838     | 0.851     |
-| Baseline XGBoost         | 0.859     | 0.846  | 0.852     | 0.981   | 0.857     | 0.856     |
-| **SMOTE+Tomek XGBoost**  | **0.879** | **0.867** | **0.873** | **0.987** | **0.879** | **0.874** |
+| Baseline RF              | 0.962     | 0.751  | 0.843     | 0.951   | 0.838     | 0.851     |
+| Baseline XGBoost         | 0.943     | 0.776  | 0.852     | 0.969   | 0.857     | 0.856     |
+| **SMOTE+Tomek XGBoost**  | **0.879** | **0.867** | **0.873** | **0.981** | **0.879** | **0.874** |
 
 Razlika izmedju najboljeg modela i baseline-a je statisticki znacajna
 (Friedman + Nemenyi, p < 0.01).
@@ -107,4 +108,4 @@ Politehnicki fakultet Zenica - Softversko inzenjerstvo.
 
 ## License
 
-MIT License - za akademske svrhe. Dataset zadrzava svoju originalnu licencu (Kaggle).
+MIT License - za akademske svrhe
