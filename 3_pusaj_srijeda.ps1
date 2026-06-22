@@ -36,8 +36,3 @@ git push origin main
 Write-Host ""
 Write-Host "===========================================" -ForegroundColor Green
 Write-Host "  SESSION 3 GOTOV." -ForegroundColor Green
-Write-Host ""
-Write-Host "  Sljedeci push: PONEDJELJAK 01.06.2026 (zadnji!)" -ForegroundColor Yellow
-Write-Host "  Tada pokreni: .\4_pusaj_subota.ps1" -ForegroundColor Yellow
-Write-Host "===========================================" -ForegroundColor Green
-Write-Host ""
