@@ -7,7 +7,7 @@ Write-Host "  Projekat T-06 Islam - GitHub Upload" -ForegroundColor Cyan
 Write-Host "============================================" -ForegroundColor Cyan
 Write-Host ""
 
-# ---- 0. Provjeri da li je git instaliran -------------------
+
 try {
     $gitVersion = git --version
     Write-Host "[OK] $gitVersion" -ForegroundColor Green
@@ -17,7 +17,7 @@ try {
     exit 1
 }
 
-# ---- 1. Pitaj korisnika za GitHub repo URL -----------------
+
 Write-Host ""
 Write-Host "PRIJE NEGO POKRENES:" -ForegroundColor Yellow
 Write-Host "  1) Idi na https://github.com/new"
@@ -34,7 +34,7 @@ if ([string]::IsNullOrWhiteSpace($repoUrl)) {
     exit 1
 }
 
-# ---- 2. Git identitet --------------------------------------
+
 $existingName  = git config --global user.name  2>$null
 $existingEmail = git config --global user.email 2>$null
 
@@ -50,7 +50,7 @@ Write-Host ""
 Write-Host "[OK] Git identitet:" -ForegroundColor Green
 Write-Host "     $(git config --global user.name) <$(git config --global user.email)>"
 
-# ---- 3. Init repo ------------------------------------------
+
 Write-Host ""
 Write-Host "[KORAK 1/3] Inicijalizujem git repozitorij..." -ForegroundColor Cyan
 if (-not (Test-Path ".git")) {
@@ -58,7 +58,7 @@ if (-not (Test-Path ".git")) {
     git branch -M main
 }
 
-# ---- 4. Commit-uj faze redoslijedom S1 -> S8 ---------------
+
 Write-Host ""
 Write-Host "[KORAK 2/3] Pravim 8 commitova (S1-S8)..." -ForegroundColor Cyan
 
@@ -67,7 +67,7 @@ function Add-PhaseCommit {
 
     if (Test-Path $Path) {
         git add $Path
-        # Provjeri da li ima sta da se commit-uje
+      
         $staged = git diff --cached --name-only
         if ($staged) {
             git commit -m $Message
@@ -80,7 +80,7 @@ function Add-PhaseCommit {
     }
 }
 
-# Prvi commit: root fajlovi (README, .gitignore)
+
 git add README.md .gitignore
 git commit -m "chore: init repo with README and .gitignore"
 
@@ -93,18 +93,18 @@ Add-PhaseCommit "S6" "S6: paper draft - Intro + RW + Methodology"
 Add-PhaseCommit "S7" "S7: paper draft - Results + Discussion + Conclusion"
 Add-PhaseCommit "S8" "S8: final paper + PPTX + reproducible code"
 
-# Pokupi sve ostalo sto je mozda ostalo
+
 git add -A
 $leftover = git diff --cached --name-only
 if ($leftover) {
     git commit -m "chore: misc files (upload script, guides)"
 }
 
-# ---- 5. Push -----------------------------------------------
+
 Write-Host ""
 Write-Host "[KORAK 3/3] Push na GitHub..." -ForegroundColor Cyan
 
-# Dodaj remote (ili azuriraj ako vec postoji)
+
 $remoteExists = git remote 2>$null | Select-String "^origin$"
 if ($remoteExists) {
     git remote set-url origin $repoUrl
@@ -121,8 +121,3 @@ Write-Host "  - Expiration: 90 days je OK" -ForegroundColor Yellow
 Write-Host ""
 
 git push -u origin main
-
-Write-Host ""
-Write-Host "============================================" -ForegroundColor Green
-Write-Host "  GOTOVO! Projekat je na GitHub-u." -ForegroundColor Green
-Write-Host "============================================" -ForegroundColor Green
